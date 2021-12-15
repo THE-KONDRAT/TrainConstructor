@@ -80,7 +80,7 @@ namespace ConsolePresenter
             train.AddWagon(w3);
             train.AddWagon(w4);
 
-            return TestTrain();
+            return train;
         }
     }
 }
