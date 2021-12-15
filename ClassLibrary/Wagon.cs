@@ -6,6 +6,7 @@ namespace ClassLibrary.Train.Wagon
 {
     public class Wagon
     {
+
         public List<ClassLibrary.Cargo> Cargo { get; set; }
 
         public Wagon()

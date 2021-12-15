@@ -29,7 +29,7 @@ namespace ConsolePresenter
         /// </summary>
         /// <param name="train"></param>
         /// <returns></returns>
-        private static string CreateTrainString(ClassLibrary.Train.Train train)
+        internal static string CreateTrainString(ClassLibrary.Train.Train train)
         {
             string result = string.Empty;
 
