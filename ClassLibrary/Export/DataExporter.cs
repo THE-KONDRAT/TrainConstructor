@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System;
 
 namespace ClassLibrary.Export
 {
@@ -14,107 +10,41 @@ namespace ClassLibrary.Export
         /// <param name="contents">String to save</param>
         /// <param name="filePath"></param>
         /// <param name="overwrite"></param>
-        public static void SaveTextToFile(string contents, string filePath, bool overwrite)
+        public static void ExportToTextFile(Train.Train train, string filePath, bool overwrite)
         {
-            string validationError = ValidateFilePath(filePath, overwrite);
-            if (validationError != null)
-            {
-                throw new Exception(validationError);
-            }
-
-            File.WriteAllText(filePath, contents);
+            FileAccess.FileOperation.SaveTextToFile(train.GetTrainString(), filePath, overwrite);
         }
-
-        /// <summary>
-        /// Method to validate file path
-        /// </summary>
-        /// <param name="filePath"></param>
-        /// <param name="overwrite"></param>
-        /// <returns>Error string. If null - all is OK.</returns>
-        private static string ValidateFilePath(string filePath, bool overwrite)
-        {
-            string error = null;
-
-            if (string.IsNullOrWhiteSpace(filePath))
-            {
-                return "File path is empty.";
-                //throw new Exception("File path is empty.");
-            }
-
-            //Check if file exists
-            bool fileExists = false;
-            try
-            {
-                if (File.Exists(filePath) || Directory.Exists(filePath))
-                {
-                    fileExists = true;
-                }
-            }
-            catch (Exception e)
-            {
-                return e.Message;
-            }
-
-            if (fileExists)
-            {
-                FileAttributes attr = File.GetAttributes(filePath);
-                if (attr.HasFlag(FileAttributes.Directory))
-                {
-                    return "Wrong path: it's already existed directory.";
-                    //throw new Exception("Wrong file path^ is directory.");
-                }
-
-                if (!overwrite)
-                {
-                    return $"File {filePath} is already exists. Overwriting denied";
-                    //throw new Exception($"File{filePath} is already exists. Overwriting denied");
-                }
-
-            }
-
-            return error;
-        }
-
-
-        #region JSON
-        private static JsonSerializerSettings GetJSONSetstings()
-        {
-            return new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.Auto
-            };
-        }
-
         /// <summary>
         /// Method to serialize and save object to json file
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="filePath"></param>
         /// <param name="overwrite"></param>
-        public static void SaveJSON(object obj, string filePath, bool overwrite)
+        public static void ExportToJsonFile(Train.Train train, string filePath, bool overwrite)
         {
-            string jstring = JsonConvert.SerializeObject(obj, Formatting.Indented, GetJSONSetstings());
-            SaveTextToFile(jstring, filePath, overwrite);
-        }
-        #endregion
-
-        #region Excel
-        /// <summary>
-        /// Method to serialize and save object to json file
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="filePath"></param>
-        /// <param name="overwrite"></param>
-        public static void SaveToExcel(object obj, string filePath, bool overwrite)
-        {
-            string validationError = ValidateFilePath(filePath, overwrite);
+            string validationError = FileAccess.FileOperation.ValidateFilePath(filePath, overwrite);
             if (validationError != null)
             {
                 throw new Exception(validationError);
             }
 
-            //Excel export realization
+            JSON_Access.JsonOperations.SaveJSON(train, filePath, overwrite);
         }
-        #endregion
+        /// <summary>
+        /// Method to serialize and save object to Excel file
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="filePath"></param>
+        /// <param name="overwrite"></param>
+        public static void ExportToExcel(object obj, string filePath, bool overwrite)
+        {
+            string validationError = FileAccess.FileOperation.ValidateFilePath(filePath, overwrite);
+            if (validationError != null)
+            {
+                throw new Exception(validationError);
+            }
+
+            //Excel export realization using ExcelAccess class
+        }
     }
 }

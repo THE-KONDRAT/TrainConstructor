@@ -9,41 +9,41 @@ namespace ConsolePresenter
             ClassLibrary.Train.Train train = TestTrain();
             
             TrainPrinter.PrintTrain(train);
-            string trainString = TrainPrinter.CreateTrainString(train);
+            string trainString = ClassLibrary.Train.Train.GetTrainString(train);
 
             //Export to text file
             string txtFilePath = "";
             #region Tests
             //Test empty path
             //Error appears
-            //ClassLibrary.Export.DataExporter.SaveTextToFile(trainString, "", true);
+            //ClassLibrary.Export.DataExporter.ExportToTextFile(train, "", true);
 
             //Test create file
-            //ClassLibrary.Export.DataExporter.SaveTextToFile(trainString, @"E:\tp.txt", true);
+            //ClassLibrary.Export.DataExporter.ExportToTextFile(train, @"E:\tp.txt", true);
 
             //Test overwrite denied variant.
             //Exception appears
-            //ClassLibrary.Export.DataExporter.SaveTextToFile(trainString, @"E:\tp.txt", false);
+            //ClassLibrary.Export.DataExporter.ExportToTextFile(train, @"E:\tp.txt", false);
 
             //File without extension
             //We have no restrictions
-            //ClassLibrary.Export.DataExporter.SaveTextToFile(trainString, @"E:\tpvb", true);
+            //ClassLibrary.Export.DataExporter.ExportToTextFile(train, @"E:\tpvb", true);
 
             //Already existed folder
             //Error: wrong path type
-            //ClassLibrary.Export.DataExporter.SaveTextToFile(trainString, @"E:\Новая папка", false);
+            //ClassLibrary.Export.DataExporter.ExportToTextFile(train, @"E:\Новая папка", false);
             #endregion
             //Exception handler needed
-            ClassLibrary.Export.DataExporter.SaveTextToFile(trainString, txtFilePath, true);
+            ClassLibrary.Export.DataExporter.ExportToTextFile(train, txtFilePath, true);
 
 
             //Serialize and export json to file
             string jsonFilePath = @"";
-            ClassLibrary.Export.DataExporter.SaveJSON(train, jsonFilePath, true);
+            ClassLibrary.Export.DataExporter.ExportToJsonFile(train, jsonFilePath, true);
 
             //Export to excel document
             string excelFilePath = "";
-            ClassLibrary.Export.DataExporter.SaveToExcel(train, excelFilePath, true);
+            ClassLibrary.Export.DataExporter.ExportToExcel(train, excelFilePath, true);
 
             /*using (ClassLibrary.DBLogic.InMemoryDB db = new ClassLibrary.DBLogic.InMemoryDB())
             {
